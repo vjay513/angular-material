@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Person } from '../model/person.model';
 import { Persons } from '../model/persons.model';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,7 +20,7 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatTable, {static: true}) table: MatTable<Person>;
+  @ViewChild(MatTable, {static: true}) table: MatTable<Persons>;
 
   constructor(public dialog: MatDialog) {}
 
@@ -59,9 +58,10 @@ export class DashboardComponent implements OnInit {
   }
 
   updateRowData(rowObj) {
+    console.log(rowObj);
     const alter = this.dataSource.data.filter((value) => {
       if (value.id === rowObj.id) {
-        value.name = rowObj.first_name;
+        value.name = rowObj.name;
       }
       return true;
     });
