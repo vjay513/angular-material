@@ -59,9 +59,10 @@ export class DashboardComponent implements OnInit {
   }
 
   updateRowData(rowObj) {
+    console.log(rowObj);
     const alter = this.dataSource.data.filter((value) => {
       if (value.id === rowObj.id) {
-        value.name = rowObj.first_name;
+        value.name = rowObj.name;
       }
       return true;
     });

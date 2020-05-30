@@ -8,4 +8,5 @@ export interface Persons {
   zip: number;
   phone: number;
   email: string;
+  action?: string;
 }
