@@ -6,8 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
-import { ajax } from 'rxjs/ajax';
-const PERSONS = '../../assets/person.json';
+import { CrudService } from './crud.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,12 +21,12 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatTable, {static: true}) table: MatTable<Persons>;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public crud: CrudService) {}
 
   ngOnInit() {
-    const users = ajax(PERSONS);
-    const subscribe = users.subscribe(
+    this.crud.loadPersons().subscribe(
       res => {
+        this.crud.setPersons(res.response);
         this.dataSource.data = res.response;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -41,38 +40,24 @@ export class DashboardComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(action, obj) {
-    obj.action = action;
+  openDialog(action, target) {
+    target.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '250px',
-      data: obj
+      data: target
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      }
+      (result.event === 'Update') ? this.updateRowData(result.data) : this.deleteRowData(result.data);
     });
   }
 
-  updateRowData(rowObj) {
-    console.log(rowObj);
-    const alter = this.dataSource.data.filter((value) => {
-      if (value.id === rowObj.id) {
-        value.name = rowObj.name;
-      }
-      return true;
-    });
-    this.dataSource.data = alter;
+  updateRowData(target) {
+    this.dataSource.data = this.crud.updateRow(target);
   }
 
-  deleteRowData(rowObj) {
-    const alter = this.dataSource.data.filter(row => {
-      return row.id !== rowObj.id;
-    });
-    this.dataSource.data = alter;
+  deleteRowData(target) {
+    this.dataSource.data = this.crud.deleteRow(target);
   }
 }
 
