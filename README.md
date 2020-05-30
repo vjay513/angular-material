@@ -8,7 +8,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:8100/`. The app will automatically reload if you change any of the source files.
+
+within `angular.json`changes default port number to 8100
+
+`"serve": {
+  "options": {
+    "port": 8100
+  }`
 
 ## Code scaffolding
 
@@ -37,5 +44,16 @@ CRUD operations with Angular Material, Ngrx, Node and mongodb
 ## Install Angular Material
 Use the Angular CLI's install schematic to set up your Angular Material project by running the following command:
 
-- ng add @angular/material
+- `ng add @angular/material`
+
+## Lazy-loading feature modules
+
+- Create the feature module with the CLI, using the --route flag.
+- Configure the routes.
+
+`ng new customer-app --routing`
+
+## Create a feature module with routing
+
+`ng generate module customers --route customers --module app.module`
 
