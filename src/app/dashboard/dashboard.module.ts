@@ -7,6 +7,10 @@ import { AppMaterialModule } from '../app.material.moule';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { FormsModule } from '@angular/forms';
 
+import { EffectsModule, Actions } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
+import { PersonReducer } from './store/person.reducer';
 
 @NgModule({
   declarations: [DashboardComponent, DialogBoxComponent],
@@ -14,7 +18,9 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     AppMaterialModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    StoreModule.forFeature('persons', PersonReducer),
+   // EffectsModule.forFeature([PersonEffect])
   ],
   entryComponents: [
     DialogBoxComponent

@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { ajax } from 'rxjs/ajax';
 import { Persons } from '../model/persons.model';
-import { MatTableDataSource } from '@angular/material/table';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-const PERSONS = '../../assets/person.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrudService {
+  private PERSONS = '../../assets/person.json';
+
   dataSource: Persons[];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  loadPersons() {
-    const users = ajax(PERSONS);
-    return users;
+  loadPersons(): Observable<Persons[]> {
+    return this.http.get<Persons[]>(this.PERSONS);
   }
 
   setPersons(dataSource: Persons[]) {
@@ -23,12 +24,11 @@ export class CrudService {
   }
 
   updateRow(target: Persons) {
-    return this.dataSource.filter((value) => {
-      if (value.id === target.id) {
-        value.name = target.name;
-      }
-      return true;
+
+    const index = this.dataSource.findIndex((value) => {
+      return value.id === target.id;
     });
+    return [...this.dataSource, {...this.dataSource[index], name: target.name}];
   }
 
   deleteRow(target: Persons) {

@@ -20,5 +20,9 @@ table{
  th.mat-sort-header-sorted {
   color: black;
 }
-
-
+.loader {
+  position: absolute;
+  z-index: 1;
+  margin-left: 50%;
+  margin-top: 20%;
+}

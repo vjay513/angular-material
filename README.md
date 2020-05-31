@@ -61,4 +61,53 @@ ng new customer-app --routing
 ng generate module customers --route customers --module app.module
 ```
 
-## 
+## Add Ngrx to the Application
+`@ngrx/store`
+
+Store is RxJS powered state management for Angular applications, inspired by Redux. Store is a controlled state container designed to help write performant, consistent applications on top of Angular.
+```
+npm install @ngrx/store --save
+```
+`@ngrx/store-devtools`
+
+Store Devtools provides developer tools and instrumentation for Store.
+```
+npm install @ngrx/store-devtools --save
+```
+`@ngrx/effects`
+
+Effects are an RxJS powered side effect model for Store. Effects use streams to provide new sources of actions to reduce state based on external interactions such as network requests, web socket messages and time-based events.
+```
+npm install @ngrx/effects --save
+```
+`@ngrx/router-store`
+
+Bindings to connect the Angular Router with Store. During each router navigation cycle, multiple actions are dispatched that allow you to listen for changes in the router's state. You can then select data from the state of the router to provide additional information to your application.
+```
+npm install @ngrx/router-store --save
+```
+`@ngrx/entity`
+Entity State adapter for managing record collections.
+
+Entity provides an API to manipulate and query entity collections.
+
+- Reduces boilerplate for creating reducers that manage a collection of models.
+- Provides performant CRUD operations for managing entity collections.
+- Extensible type-safe adapters for selecting entity information.
+```
+npm install @ngrx/entity --save
+```
+`@ngrx/data`
+
+NgRx Data is an extension that offers a gentle introduction to NgRx by simplifying management of ***entity*** data while reducing the amount of explicitness.
+```
+npm install @ngrx/data --save
+```
+
+`@ngrx/schematics`
+Scaffolding library for Angular applications using NgRx libraries.
+
+Schematics provides Angular CLI commands for generating files when building new NgRx feature areas and expanding existing ones. Built on top of Schematics, this tool integrates with the Angular CLI.
+```
+npm install @ngrx/schematics --save-dev
+```
