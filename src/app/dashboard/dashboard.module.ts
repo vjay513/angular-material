@@ -20,7 +20,6 @@ import { PersonReducer } from './store/person.reducer';
     AppMaterialModule,
     DashboardRoutingModule,
     StoreModule.forFeature('persons', PersonReducer),
-   // EffectsModule.forFeature([PersonEffect])
   ],
   entryComponents: [
     DialogBoxComponent

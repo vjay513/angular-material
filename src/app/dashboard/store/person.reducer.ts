@@ -40,39 +40,16 @@ export function PersonReducer(state = initialState, action) {
       };
     }
     case 'UPDATE_USERS': {
-        return {
-          ...state,
-          loaded: false,
-          loading: false
-        };
-    }
-    default: {
-      return state;
-    }
-  }
-}
-/* import * as personActions from './person.action';
-import { Persons } from 'src/app/model/persons.model';
-
-export function personsReducer(
-  state,
-  action: personActions.Actions
-): Persons {
-  switch (action.type) {
-    case personActions.PersonActionTypes.LOAD_PERSONS_SUCCESS: {
       return {
         ...state,
-        loading: false,
-        loaded: true
+        persons: [...state.persons.map(val => (val.id === action.target.id) ? {...val, name: action.target.name} : val)]
       };
     }
-    case personActions.PersonActionTypes.LOAD_PERSONS_FAIL: {
+    case 'DELETE_USER': {
+      console.log(action.target);
       return {
         ...state,
-        entities: {},
-        loading: false,
-        loaded: false,
-        error: action.payload
+        persons: [...state.persons.filter(val => (val.id !== action.target.id) )]
       };
     }
     default: {
@@ -80,5 +57,3 @@ export function personsReducer(
     }
   }
 }
-
- */

@@ -10,16 +10,12 @@ import { CrudService } from './crud.service';
 import { Store, select } from '@ngrx/store';
 import * as fromPerson from './store/person.reducer';
 import { Observable } from 'rxjs';
-import * as personActions from './store/person.action';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  persons$: Observable<Persons[]>;
-  error$: Observable<string>;
-  loader = true;
   displayedColumns: string[] = ['id', 'name', 'company', 'address', 'city', 'county', 'zip', 'phone', 'email', 'action'];
   dataSource = new MatTableDataSource<Persons>([]);
 
@@ -33,36 +29,16 @@ export class DashboardComponent implements OnInit {
   private store: Store<any>) {}
 
   ngOnInit() {
-/*     this.store.dispatch(new personActions.LoadPersons());
-    this.persons$ = this.store.pipe(select(fromPerson.getPersons));
-    this.error$ = this.store.pipe(select(fromPerson.getError)); */
-/*     this.store.dispatch(new personActions.LoadPersons());
-    this.store.subscribe(state => {
-      this.persons$ = this.store.pipe(select(fromPerson.getPersons));
-      console.log(this.persons$);
-    }); */
     this.store.dispatch({type: 'LOAD_PERSONS'});
+    this.loadTable();
+  }
+
+  loadTable() {
     this.store.subscribe(state =>  {
-      this.persons$ = state.persons.persons;
-      this.loader = false;
-      this.crud.setPersons(state.persons.persons);
       this.dataSource.data = state.persons.persons;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-
-
-/*     this.crud.loadPersons().subscribe(
-      res => {
-        this.loader = false;
-        this.crud.setPersons(res);
-        this.dataSource.data = res;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-
-      },
-      err => console.error(err)
-    ); */
   }
 
   applyFilter(event: Event) {
@@ -82,11 +58,11 @@ export class DashboardComponent implements OnInit {
   }
 
   updateRowData(target) {
-    this.dataSource.data = this.crud.updateRow(target);
+    this.store.dispatch({type: 'UPDATE_USERS', target});
   }
 
   deleteRowData(target) {
-    this.dataSource.data = this.crud.deleteRow(target);
+    this.store.dispatch({type: 'DELETE_USER', target});
   }
 }
 
