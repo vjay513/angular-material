@@ -7,9 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { CrudService } from './crud.service';
-import { Store, select } from '@ngrx/store';
-import * as fromPerson from './store/person.reducer';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import * as personsActions from './store/person.action';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   private store: Store<any>) {}
 
   ngOnInit() {
-    this.store.dispatch({type: 'LOAD_PERSONS'});
+    this.store.dispatch(new personsActions.LoadPersons());
     this.loadTable();
   }
 
@@ -58,11 +58,11 @@ export class DashboardComponent implements OnInit {
   }
 
   updateRowData(target) {
-    this.store.dispatch({type: 'UPDATE_USERS', target});
+    this.store.dispatch(new personsActions.UpdatePersons(target));
   }
 
   deleteRowData(target) {
-    this.store.dispatch({type: 'DELETE_USER', target});
+    this.store.dispatch(new personsActions.DeletePerons(target));
   }
 }
 

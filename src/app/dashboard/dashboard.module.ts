@@ -8,6 +8,7 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { FormsModule } from '@angular/forms';
 
 import { EffectsModule, Actions } from '@ngrx/effects';
+import { PersonEffect } from '../dashboard/store/person.effects';
 import { StoreModule } from '@ngrx/store';
 
 import { PersonReducer } from './store/person.reducer';
@@ -20,6 +21,7 @@ import { PersonReducer } from './store/person.reducer';
     AppMaterialModule,
     DashboardRoutingModule,
     StoreModule.forFeature('persons', PersonReducer),
+    EffectsModule.forFeature([PersonEffect]),
   ],
   entryComponents: [
     DialogBoxComponent
